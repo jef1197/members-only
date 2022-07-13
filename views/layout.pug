@@ -1,7 +1,17 @@
 doctype html
 html
   head
-    title= title
+    title Members Only Message Board
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
+    header 
+      h1 Members Only Message Board
+      ul 
+      if user
+        li Sign-Out
+      else 
+        li Log-In
     block content
