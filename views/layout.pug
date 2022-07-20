@@ -15,5 +15,8 @@ html
       if user
         li Sign-Out
       else 
-        li Log-In
+        li 
+          a(href='/home/login') Log-In
+        li 
+          a(href='/home/user/create') Create Account
     block content
