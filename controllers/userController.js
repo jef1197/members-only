@@ -4,7 +4,7 @@ var User = require('../models/user')
 
 
 exports.index = function(req, res) {
-  res.render('index', {title: 'Hsssome'});
+  res.render('index', {title: 'Hsssome', user: req.user});
 };
 
 exports.login = function(req, res, next) {
@@ -23,7 +23,7 @@ exports.user_create_post = [
 
     var user = new User(
       {
-        username: req.body.name,
+        username: req.body.username,
         password: req.body.password
       }
     ).save(err => {

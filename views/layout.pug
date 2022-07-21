@@ -12,8 +12,13 @@ html
 
       ul 
       li Messages
+        //- a(href='/home/messages') All Messages
       if user
-        li Sign-Out
+        li #{user.username}
+        li 
+          a(href='/home/logout') Sign-Out
+        li 
+          a(href='/home/message/create') New Message
       else 
         li 
           a(href='/home/login') Log-In

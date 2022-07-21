@@ -9,6 +9,7 @@ var logger = require('morgan');
 require('dotenv').config();
 var bcrypt = require('bcryptjs');
 var mongoose = require('mongoose');
+var User = require('./models/user')
 
 
 var indexRouter = require('./routes/index');
@@ -31,10 +32,45 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({ secret: 'cats', resave: false, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(express.urlencoded({ extended: false }));
+
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/home', memberRouter);
+
+app.post('/home/login', passport.authenticate('local', { successRedirect: '/', failureRedirect: '/' }));
+
+passport.use(
+  new LocalStrategy((username, password, done) => {
+    User.findOne({ username: username }, (err, user) => {
+      if (err) { 
+        return done(err);
+      }
+      if (!user) {
+        return done(null, false, { message: "Incorrect username" });
+      }
+      if (user.password !== password) {
+        return done(null, false, { message: "Incorrect password" });
+      }
+      return done(null, user)
+    });
+  })
+);
+
+
+passport.serializeUser( function(user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser( function(id, done) {
+  User.findById(id, function(err, user) {
+    done(err, user);
+  });
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
