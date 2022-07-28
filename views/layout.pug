@@ -18,7 +18,13 @@ html
         li 
           a(href='/home/logout') Sign-Out
         li 
-          a(href='/home/message/create') New Message
+          a(href='/home/messages') Become A Member
+        if user.member 
+          li 
+            a(href='/home/message/create') New Message
+        else
+          li 
+            a(href='/home/message/create') New Messages
       else 
         li 
           a(href='/home/login') Log-In
