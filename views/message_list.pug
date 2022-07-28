@@ -1,0 +1,15 @@
+extends layout 
+
+block content 
+  h1= title 
+
+  ul(class='homepage') 
+    each message in list 
+      li(class='') 
+        p #{message.title}
+        div(class='pokeTypeContainer')
+          p #{message.message}
+        
+
+    else 
+      li There are no messages.
