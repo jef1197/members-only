@@ -7,11 +7,12 @@ exports.messages = function(req, res, next) {
   .populate('message')
   .exec(function(err, list) {
   if(err) { return next(err); }
-  res.render('message_list', {title: 'Messages', list: list})
+  res.render('message_list', {title: 'Messages', list: list, user: req.user})
 })
+
 }
 exports.message_create_get = function(req, res, next) {
-  res.render('create_message_form', {title: 'New Message'});
+  res.render('create_message_form', {title: 'New Message', user: req.user});
 }
 
 exports.message_create_post = [
